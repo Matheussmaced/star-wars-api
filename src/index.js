@@ -28,7 +28,12 @@ app.post('/', async (req, res) => {
   })
 
   await film.save()
-  res.send(film)
+  return res.send(film)
+})
+
+app.delete('/:id', async(req, res) => {
+  const film = await Film.findByIdAndDelete(req.params.id)
+  return res.send(film)
 })
 
 app.listen(port, () => {
