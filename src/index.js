@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 const app = express();
 app.use(express.json());
 const port = 3000;
-mongoose.connect('mongodb+srv://admin:admin@starwars-api.wcw8f.mongodb.net/?retryWrites=true&w=majority&appName=starwars-api');
 
 const Film = mongoose.model('Film', {
   title: String,
@@ -14,8 +13,10 @@ const Film = mongoose.model('Film', {
   trailer_url: String
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello world!');
+app.get('/', async (req, res) => {
+  const films = await Film.find()
+
+  res.send(films);
 });
 
 app.post('/', async (req, res) => {
@@ -31,5 +32,6 @@ app.post('/', async (req, res) => {
 })
 
 app.listen(port, () => {
+  mongoose.connect('mongodb+srv://admin:admin@starwars-api.wcw8f.mongodb.net/?retryWrites=true&w=majority&appName=starwars-api');
   console.log(`A aplicação está rodando na porta ${port}`);
 });
