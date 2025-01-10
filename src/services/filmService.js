@@ -1,7 +1,11 @@
 import Film from "../models/filmModel.js";
 
-export const getAllFilms = async () => {
-  return await Film.find();
+export const getAllFilms = async (page = 1, limit = 10) => {
+  const skip = (page - 1) * limit;
+  const films = await Film.find().skip(skip).limit(limit);
+  const totalFilms = await Film.countDocuments();
+
+  return { films, totalFilms };
 };
 
 export const createFilm = async (data) => {

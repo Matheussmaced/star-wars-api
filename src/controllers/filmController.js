@@ -1,8 +1,26 @@
 import { getAllFilms, createFilm, updateFilm, deleteFilm } from "../services/filmService.js";
 
 export const getFilms = async (req, res) => {
-  const films = await getAllFilms();
-  res.send(films);
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const { films, totalFilms } = await getAllFilms(page, limit);
+    const totalPages = Math.ceil(totalFilms / limit);
+
+    return res.json({
+      films,
+      pagination: {
+        totalFilms,
+        totalPages,
+        currentPage: page,
+        limit
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Erro ao buscar filmes." });
+  }
 };
 
 export const addFilm = async (req, res) => {

@@ -13,6 +13,8 @@
   "dependencies": {
     "express": "^4.21.2",
     "mongoose": "^8.9.4",
-    "star-wars-api": "file:"
+    "star-wars-api": "file:",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }
